@@ -118,7 +118,7 @@ task remapTestmodJar(type: RemapJarTask, dependsOn: project.testmodJar) {
 
 processLaunchResources {
     inputs.property "version", project.version
-    filesMatching('quilt.mod.json') {
+    filesMatching('fabric.mod.json') {
         expand "version": project.version
     }
 }
