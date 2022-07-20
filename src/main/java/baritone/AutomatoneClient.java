@@ -28,6 +28,7 @@ import baritone.selection.SelectionRenderer;
 import baritone.utils.GuiClick;
 import baritone.utils.PathRenderer;
 import com.mojang.authlib.GameProfile;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
@@ -41,8 +42,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
+
 
 import java.util.Collections;
 import java.util.Objects;
@@ -79,7 +79,7 @@ public final class AutomatoneClient implements ClientModInitializer {
     }
 
     @Override
-    public void onInitializeClient(ModContainer mod) {
+    public void onInitializeClient() {
         WorldRenderEvents.BEFORE_DEBUG_RENDER.register(AutomatoneClient::onRenderPass);
         ClientPlayNetworking.registerGlobalReceiver(ClickCommand.OPEN_CLICK_SCREEN, (client, handler, buf, responseSender) -> {
             UUID uuid = buf.readUuid();
