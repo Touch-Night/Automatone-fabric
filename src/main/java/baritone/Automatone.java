@@ -19,7 +19,9 @@ package baritone;
 
 import baritone.command.defaults.DefaultCommands;
 import baritone.command.manager.BaritoneArgumentType;
+import net.fabricmc.api.ModInitializer;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.command.argument.SingletonArgumentInfo;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
@@ -27,9 +29,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-import org.quiltmc.qsl.command.api.ServerArgumentType;
 
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -60,8 +59,8 @@ public final class Automatone implements ModInitializer {
     }
 
     @Override
-    public void onInitialize(ModContainer mod) {
+    public void onInitialize() {
         DefaultCommands.registerAll();
-        ServerArgumentType.register(id("command"), BaritoneArgumentType.class, SingletonArgumentInfo.contextFree(BaritoneArgumentType::baritone), t -> StringArgumentType.greedyString());
+        ArgumentTypes.register("automatone:command", BaritoneArgumentType.class, SingletonArgumentInfo.contextFree(BaritoneArgumentType::baritone), t -> StringArgumentType.greedyString());
     }
 }
