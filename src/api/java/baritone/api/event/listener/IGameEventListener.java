@@ -16,7 +16,7 @@
  */
 
 package baritone.api.event.listener;
-package net.fabricmc.fabric.api.event.lifecycle.v1
+package net.fabricmc.fabric.api.event.lifecycle.v1;
 
 import baritone.api.IBaritone;
 import baritone.api.event.events.*;
