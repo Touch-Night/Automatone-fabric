@@ -97,7 +97,7 @@ dependencies {
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cca_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cca_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
-    modTestImplementation("io.github.ladysnake:elmendorf:${elmendorf_version}") {
+    modLocalImplementation("io.github.ladysnake:elmendorf:${elmendorf_version}") {
         transitive = false
     }
     compileOnly "com.demonwav.mcdev:annotations:1.0"
