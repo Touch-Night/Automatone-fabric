@@ -79,7 +79,8 @@ public class CalculationContext {
     public double backtrackCostFavoringCoefficient;
     public double jumpPenalty;
     public final double walkOnWaterOnePenalty;
-    public final int worldHeight;
+    public final int worldBottom;
+    public final int worldTop;
     public final int width;
     /**The extra space required on each side of the entity for free movement; 0 in the case of a normal size player*/
     public final int requiredSideSpace;
@@ -106,7 +107,7 @@ public class CalculationContext {
         this.bsi = new BlockStateInterface(world);
         this.toolSet = player == null ? null : new ToolSet(player);
         this.hasThrowaway = baritone.settings().allowPlace.get() && ((Baritone) baritone).getInventoryBehavior().hasGenericThrowaway();
-        this.hasWaterBucket = player != null && baritone.settings().allowWaterBucketFall.get() && PlayerInventory.isValidHotbarIndex(InventoryBehavior.getSlotWithStack(player.inventory, Automatone.WATER_BUCKETS)) && !world.getDimension().isUltrawarm();
+        this.hasWaterBucket = player != null && baritone.settings().allowWaterBucketFall.get() && PlayerInventory.isValidHotbarIndex(InventoryBehavior.getSlotWithStack(player.getInventory(), Automatone.WATER_BUCKETS)) && !world.getDimension().isUltrawarm();
         this.canSprint = player != null && baritone.settings().allowSprint.get() && player.getHungerManager().getFoodLevel() > 6;
         this.placeBlockCost = baritone.settings().blockPlacementPenalty.get();
         this.allowBreak = baritone.settings().allowBreak.get();
@@ -133,7 +134,8 @@ public class CalculationContext {
         // why cache these things here, why not let the movements just get directly from settings?
         // because if some movements are calculated one way and others are calculated another way,
         // then you get a wildly inconsistent path that isn't optimal for either scenario.
-        this.worldHeight = world.getHeight();
+        this.worldTop = world.getTopY();
+        this.worldBottom = world.getBottomY();
         EntityDimensions dimensions = entity.getDimensions(EntityPose.STANDING);
         this.width = MathHelper.ceil(dimensions.width);
         // Note: if width is less than 1 (but not negative), we get side space of 0

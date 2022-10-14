@@ -73,7 +73,7 @@ public class BlockStateInterface {
     }
 
     public BlockState get0(int x, int y, int z) { // Mickey resigned
-        if (World.isOutOfBuildLimitVertically(y)) return AIR;
+        if (this.world.isOutOfHeightLimit(y)) return AIR;
 
         WorldChunk cached = prev;
         // there's great cache locality in block state lookups
@@ -83,12 +83,12 @@ public class BlockStateInterface {
         // which is a Long2ObjectOpenHashMap.get
         // see issue #113
         if (cached != null && cached.getPos().x == x >> 4 && cached.getPos().z == z >> 4) {
-            return getFromChunk(cached, x, y, z);
+            return getFromChunk(this.world, cached, x, y, z);
         }
         WorldChunk chunk = provider.automatone$getChunkNow(x >> 4, z >> 4);
         if (chunk != null && !chunk.isEmpty()) {
             prev = chunk;
-            return getFromChunk(chunk, x, y, z);
+            return getFromChunk(this.world, chunk, x, y, z);
         }
         return AIR;
     }
@@ -107,9 +107,9 @@ public class BlockStateInterface {
     }
 
     // get the block at x,y,z from this chunk WITHOUT creating a single blockpos object
-    public static BlockState getFromChunk(Chunk chunk, int x, int y, int z) {
-        ChunkSection section = chunk.getSectionArray()[y >> 4];
-        if (ChunkSection.isEmpty(section)) {
+    public static BlockState getFromChunk(BlockView world, Chunk chunk, int x, int y, int z) {
+        ChunkSection section = chunk.getSectionArray()[world.getSectionIndex(y)];
+        if (section.isEmpty()) {
             return AIR;
         }
         return section.getBlockState(x & 15, y & 15, z & 15);
